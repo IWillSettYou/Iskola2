@@ -5,14 +5,15 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Iskola_"
         mc:Ignorable="d"
-        Title="MainWindow" Height="600" Width="400">
+        Title="IskolaGUI" Height="600" Width="400">
     <Grid>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="0*"/>
             <ColumnDefinition/>
         </Grid.ColumnDefinitions>
         <ListBox x:Name="lItems" Grid.ColumnSpan="2"  Margin="69,10,69,219"/>
-        <Label x:Name="laTanulok" Content="Tanulók száma:" HorizontalAlignment="Center" Margin="0,370,0,0" VerticalAlignment="Top" Grid.Column="1"/>
+        <Button Content="Törlés" Grid.ColumnSpan="2" HorizontalAlignment="Left" Margin="221,394,0,0" VerticalAlignment="Top" Width="80" Click="Button_Click"/>
+        <Button Content="Mentés" Grid.ColumnSpan="2" HorizontalAlignment="Left" Margin="98,394,0,0" VerticalAlignment="Top" Width="72" Click="Button_Click_1"/>
 
 
     </Grid>

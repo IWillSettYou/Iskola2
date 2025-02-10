@@ -17,39 +17,52 @@ namespace Iskola_
     /// </summary>
     public partial class MainWindow : Window
     {
-        public class Data(int year, string schoolClass, string name)
-        {
-            public int Year { get; set; } = year;
-            public string SchoolClass { get; set; } = schoolClass;
-            public string Name { get; set; } = name;
-        }
+        private List<string> students = [];
         public MainWindow()
         {
             InitializeComponent();
-            var lines = File.ReadAllLines(@"../../../nevek.txt");
-            List<Data> data = [];
+            LoadStudents();
+        }
 
-            //3. Feladat
-            foreach (var item in lines)
+        private void LoadStudents()
+        {
+            try
             {
-                var dataArray = item.Split(';');
-                Data newData = new(
-                    int.Parse(dataArray[0]),
-                    Convert.ToString(dataArray[1]),
-                    Convert.ToString(dataArray[2]));
-                data.Add(newData);
+                students = File.ReadAllLines(@"../../../nevek.txt").ToList();
+                lItems.ItemsSource = students;
             }
-
-            //4. Feladat:
-            foreach (var item in data)
+            catch (Exception ex)
             {
-                lItems.Items.Add($"{item.Year} {item.SchoolClass} {item.Name}");
+                MessageBox.Show("Hiba történt a fájl beolvasásakor: " + ex.Message, "Hiba", MessageBoxButton.OK, MessageBoxImage.Error);
             }
-            laTanulok.Content = "Tanulók Száma: " + data.Count;
+        }
 
-
+        private void Button_Click(object sender, RoutedEventArgs e)
+        {
+            if (lItems.SelectedItem != null)
+            {
+                students.Remove(lItems.SelectedItem.ToString());
+                lItems.ItemsSource = null;
+                lItems.ItemsSource = students;
+            }
+            else
+            {
+                MessageBox.Show("Nem jelölt ki tanulót!", "Figyelmeztetés", MessageBoxButton.OK, MessageBoxImage.Warning);
+            }
 
         }
-        
+
+        private void Button_Click_1(object sender, RoutedEventArgs e)
+        {
+            try
+            {
+                File.WriteAllLines(@"../../../nevekNEW.txt", students);
+                MessageBox.Show("Sikeres mentés!", "Információ", MessageBoxButton.OK, MessageBoxImage.Information);
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Hiba történt a fájl mentésekor: " + ex.Message, "Hiba", MessageBoxButton.OK, MessageBoxImage.Error);
+            }
+        }
     }
 }
